@@ -30,7 +30,7 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .timeTable {
-    font-size:20px;
+    font-size:30px;
     width:100%;
     height:auto;
     padding:0 1px 0 1px;
@@ -50,7 +50,7 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .LectureMessages {
-    font-size:20px;
+    font-size:30px;
     width:99%;
     resize:none;
 }
