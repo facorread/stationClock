@@ -22,20 +22,24 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 var lectureTimeLeft = 75, lectureTimeEnabled = false;
 
 function init() {
-    /* Open this document in fullscreen. Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
-    if (document.requestFullscreen) {
-      document.requestFullscreen();
-    } else if (document.mozRequestFullScreen) { /* Firefox */
-      document.mozRequestFullScreen();
-    } else if (document.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-      document.webkitRequestFullscreen();
-    } else if (document.msRequestFullscreen) { /* IE/Edge */
-      document.msRequestFullscreen();
-    }
     renderTime();
     renderLectureTimeLeft();
     resizeLecture();
     setInterval(renderTime, 1000);
+}
+
+function lectureFullScreen() {
+    /* Request to see this app in fullscreen. */
+		var lectureDoc = document.documentElement;
+    if (lectureDoc.requestFullscreen) {
+      lectureDoc.requestFullscreen();
+    } else if (lectureDoc.mozRequestFullScreen) { /* Firefox */
+      lectureDoc.mozRequestFullScreen();
+    } else if (lectureDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      lectureDoc.webkitRequestFullscreen();
+    } else if (lectureDoc.msRequestFullscreen) { /* IE/Edge */
+      lectureDoc.msRequestFullscreen();
+    }
 }
 
 function renderTime() {
