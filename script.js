@@ -24,7 +24,7 @@ var lectureTimeLeft = 75, lectureTimeEnabled = false;
 function init() {
     renderTime();
     renderLectureTimeLeft();
-    resizeExam();
+    resizeLecture();
     setInterval(renderTime, 1000);
 }
 
@@ -67,6 +67,6 @@ function setLectureTime() {
     renderLectureTimeLeft();
 }
 
-function resizeExam() {
-    document.getElementById("ExamMessages").style.height = (window.innerHeight * 0.8) + "px";
+function resizeLecture() {
+    document.getElementById("LectureMessages").style.height = (window.innerHeight * 0.8) + "px";
 }

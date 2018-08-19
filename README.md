@@ -23,26 +23,10 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 
 # User Guide
 
-Before students start coming into the classroom, turn on the computer and projector. In the web browser, go to http://facorread.github.io/lectureClock/ and type your messages, instructions, clarifications about the exam contents, specific questions, glossary, rules, etc.
+Open https://facorread.github.io/examLecture/ in your phone. Type the class agenda using the model provided in the same webpage. As time progresses, the app will gray out past activities.
 
 # Questions
 
-Q. How do I change the messages?
-
-A. Just click the text area and start typing.
-
-Q. How do I set the total exam time?
-
-A. Just click it and change it.
-
-Q. Why the boring style?
-
-A. White letters on a black background are easier on the eyes than black on white, particularly when looking at a screen or projection. Sans serif letters are easier to read, too. This project is designed to avoid distraction while presenting clear instructions and information.
-
-Q. How do I change the font sizes?
-
-A. Zoom in and out using your browser's controls.
-
-Q. How do I change the colors, fonts, or sizes? How can I move the clock and timer around?
+Q. How do I change the colors, fonts, or sizes? How can I move the clock?
 
 Use Chrome Developer Tools.
