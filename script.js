@@ -62,9 +62,9 @@ function init() {
 	--lectureCurrentActivity;
 	if(lectureCurrentActivity <= 0) {
 		lectureActivities[0].style.color = "yellow";
-		setTimeLeft(lectureTimes[0]);
+		setLectureTimeLeft(lectureTimes[0]);
 	}
-	renderTime();
+	renderLectureTime();
 	renderLectureTimeLeft();
 	setInterval(renderTime, 1000);
 }
@@ -87,7 +87,7 @@ function lectureFullScreen() {
 	}
 }
 
-function renderTime() {
+function renderLectureTime() {
 	lectureCurrentTime = new Date();
 	document.getElementById("currentTimeCell").innerHTML = lectureCurrentTime.toLocaleTimeString();
 	if(lectureCurrentTime.getSeconds() == 0) {
@@ -120,7 +120,7 @@ function renderLectureTimeLeft() {
 	}
 }
 
-function setTimeLeft(lectureNextTime) {
+function setLectureTimeLeft(lectureNextTime) {
 	var lectDifference = new Date(lectureNextTime - lectureCurrentTime);
 	lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
 }
