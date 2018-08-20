@@ -19,12 +19,12 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // The exam time can be set by clicking it.
-var lectureCurrentTime = new Date(), lectureTimeLeft = 0, lectureTimeCell, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
+var lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
 
 function init() {
-	lectureTimeCell = document.getElementById("lectureTimeCell"), lectureCurrentActivity = 0;
 	lectureActivities = document.getElementsByClassName("lectureActivity");
-	var previousClock = new Date(lectureCurrentTime);
+	var lectClock = new Date(); /* Keep as few global vars as possible */
+	var previousClock = new Date(lectClock);
 	previousClock.setHours(0);
 	previousClock.setMinutes(0);
 	/* Do not use the for/in statement because it may work asynchronously. */
@@ -35,7 +35,7 @@ function init() {
 		var lectHours = lectMatch[1]; /* The first element is the whole match, unnecessary here. */
 		var lectMinutes = lectMatch[2];
 		if((lectHours >= 0) && (lectHours < 24) && (lectMinutes >= 0) && (lectMinutes < 60)) {
-			var lectClockI = new Date(lectureCurrentTime);
+			var lectClockI = new Date(lectClock);
 			lectClockI.setHours(lectHours);
 			lectClockI.setMinutes(lectMinutes);
 			if(lectClockI > previousClock) {
@@ -56,7 +56,7 @@ function init() {
 		alertMsg = alertMsg + "\n" + lectI + ": " + lectureTimes[lectI];
 	}
 	alert(alertMsg); */
-	while((lectureCurrentActivity < lectureTimes.length) && (lectureTimes[lectureCurrentActivity] < lectureCurrentTime)) {
+	while((lectureCurrentActivity < lectureTimes.length) && (lectureTimes[lectureCurrentActivity] < lectClock)) {
 		++lectureCurrentActivity;
 	}
 	--lectureCurrentActivity;
@@ -88,9 +88,9 @@ function lectureFullScreen() {
 }
 
 function renderLectureTime() {
-	lectureCurrentTime = new Date();
-	document.getElementById("currentTimeCell").innerHTML = lectureCurrentTime.toLocaleTimeString();
-	if(lectureCurrentTime.getSeconds() == 0) {
+	var lectClock = new Date();
+	document.getElementById("currentTimeCell").innerHTML = lectClock.toLocaleTimeString();
+	if(lectClock.getSeconds() == 0) {
 		if(lectureTimeLeft) {
 			--lectureTimeLeft;
 		}
@@ -99,6 +99,7 @@ function renderLectureTime() {
 }
 
 function renderLectureTimeLeft() {
+	var lectureTimeCell = document.getElementById("lectureTimeCell")
 	lectureTimeCell.innerHTML = lectureTimeLeft + " Min";
 	if(lectureTimeLeft <= 0) {
 		if(lectureCurrentActivity >= 0) {
@@ -121,6 +122,7 @@ function renderLectureTimeLeft() {
 }
 
 function setLectureTimeLeft(lectureNextTime) {
-	var lectDifference = new Date(lectureNextTime - lectureCurrentTime);
+	var lectClock = new Date();
+	var lectDifference = new Date(lectureNextTime - lectClock);
 	lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
 }
