@@ -23,6 +23,9 @@ var lectureClock = new Date(), lectureTimeLeft = 0, lectureCurrentActivity = 0, 
 
 function init() {
 	lectureActivities = document.getElementsByClassName("lectureActivity"); /* Keep as few global vars as possible */
+	if(lectureActivities.length == 0) {
+		alert("No activities, no lecture.");
+	}
 	var previousClock = new Date(lectureClock);
 	previousClock.setHours(0);
 	previousClock.setMinutes(0);
@@ -59,10 +62,19 @@ function init() {
 		++lectureCurrentActivity;
 	}
 	--lectureCurrentActivity;
-	if(lectureCurrentActivity <= 0) {
-		lectureActivities[0].style.color = "cyan";
-		setLectureTimeLeft(lectureTimes[0]);
+	var lectTimeCell = document.getElementById("lectureTimeCell");
+	if(lectureCurrentActivity < 0) {
+		lectureActivities[0].style.color = "ForestGreen";
+		lectTimeCell.style.color = "LawnGreen";
 	}
+	else {
+		lectureActivities[lectureCurrentActivity].style.color = "Lime";
+	}
+	if(lectureCurrentActivity == lectureActivities.length - 1) {
+		lectTimeCell.innerHTML = "Finished";
+		lectTimeCell.style.color = "Lime";
+	}
+	setLectureTimeLeft();
 	renderLectureTime();
 	renderLectureTimeLeft();
 	setInterval(renderLectureTime, 1000);
@@ -90,7 +102,7 @@ function renderLectureTime() {
 	lectureClock = new Date();
 	document.getElementById("currentTimeCell").innerHTML = lectureClock.toLocaleTimeString();
 	if(lectureClock.getSeconds() == 0) {
-		if(lectureTimeLeft) {
+		if(lectureTimeLeft && (lectureCurrentActivity < lectureActivities.length - 1)) {
 			--lectureTimeLeft;
 		}
 		renderLectureTimeLeft();
@@ -99,21 +111,21 @@ function renderLectureTime() {
 
 function renderLectureTimeLeft() {
 	var lectTimeCell = document.getElementById("lectureTimeCell")
-	if(lectureCurrentActivity < lectureActivities.length) {
+	if(lectureCurrentActivity < lectureActivities.length - 1) {
 		if(lectureTimeLeft <= 0) {
 			if(lectureCurrentActivity >= 0) {
-				lectureActivities[lectureCurrentActivity].style.color = "white";
+				lectureActivities[lectureCurrentActivity].style.color = document.body.style.color;
 			}
 			++lectureCurrentActivity;
-			if(lectureActivities >= lectureActivities.length) {
-				lectureTimeCell.innerHTML = "Finished";
-				lectureTimeCell.style.color = "light green";
+			lectureActivities[lectureCurrentActivity].style.color = "Lime";
+			if(lectureCurrentActivity == lectureActivities.length - 1) {
+				lectTimeCell.innerHTML = "Finished";
+				lectTimeCell.style.color = "Lime";
 			}
 			else {
-				lectureActivities[lectureCurrentActivity].style.color = "light green";
-				setLectureTimeLeft(lectureTimes[lectureCurrentActivity]);
-				lectureTimeCell.style.color = "white";
+				lectTimeCell.style.color = document.body.style.color;
 			}
+			setLectureTimeLeft();
 		}
 		else if(lectureTimeLeft <= 2) {
 			if(lectureCurrentActivity >= 0) {
@@ -123,14 +135,21 @@ function renderLectureTimeLeft() {
 			}
 			lectTimeCell.style.color = "red";
 		}
-		if(lectureTimeLeft > 0) { /* Yes, the code checks again. See above. */
+		if((lectureCurrentActivity >= 0) && (lectureCurrentActivity < lectureActivities.length - 1) && (lectureTimeLeft > 2)) { /* Yes, the code checks again. See above. */
 			lectTimeCell.style.color = document.body.style.color;
 		}
+	}
+	if(lectureCurrentActivity < lectureActivities.length - 1) { /* Yes, the code checks again. See above. */
 		lectTimeCell.innerHTML = lectureTimeLeft + " Min";
 	}
 }
 
-function setLectureTimeLeft(lectureNextTime) {
-	var lectDifference = new Date(lectureNextTime - lectureClock);
-	lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
+function setLectureTimeLeft() {
+	if(lectureCurrentActivity < lectureActivities.length - 1) {
+		var lectDifference = new Date(lectureTimes[lectureCurrentActivity + 1] - lectureClock);
+		lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
+	}
+	else {
+		lectureTimeLeft = 100;
+	}
 }
