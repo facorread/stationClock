@@ -99,14 +99,14 @@ function renderLectureTime() {
 }
 
 function renderLectureTimeLeft() {
-	var lectureTimeCell = document.getElementById("lectureTimeCell")
-	lectureTimeCell.innerHTML = lectureTimeLeft + " Min";
+	var lectTimeCell = document.getElementById("lectureTimeCell")
+	lectTimeCell.innerHTML = lectureTimeLeft + " Min";
 	if(lectureTimeLeft <= 0) {
 		if(lectureCurrentActivity >= 0) {
 			lectureActivities[lectureCurrentActivity].style.color = "white";
 		}
 		lectureActivities[++lectureCurrentActivity].style.color = "green";
-		lectureTimeCell.style.color = "white";
+		lectTimeCell.style.color = "white";
 	}
 	else if(lectureTimeLeft <= 2) {
 		if(lectureCurrentActivity >= 0) {
@@ -114,10 +114,10 @@ function renderLectureTimeLeft() {
 		} else {
 			lectureActivities[0].style.color = "red";
 		}
-		lectureTimeCell.style.color = "red";
+		lectTimeCell.style.color = "red";
 	}
 	if(lectureTimeLeft > 0) { /* Yes, the code checks again. See above. */
-		lectureTimeCell.style.color = document.body.style.color;
+		lectTimeCell.style.color = document.body.style.color;
 	}
 }
 
