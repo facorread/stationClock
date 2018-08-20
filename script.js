@@ -19,12 +19,11 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // The exam time can be set by clicking it.
-var lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
+var lectureClock = new Date(), lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
 
 function init() {
 	lectureActivities = document.getElementsByClassName("lectureActivity"); /* Keep as few global vars as possible */
-	var lectClock = new Date();
-	var previousClock = new Date(lectClock);
+	var previousClock = new Date(lectureClock);
 	previousClock.setHours(0);
 	previousClock.setMinutes(0);
 	/* Do not use the for/in statement because it may work asynchronously. */
@@ -35,7 +34,7 @@ function init() {
 		var lectHours = lectMatch[1]; /* The first element is the whole match, unnecessary here. */
 		var lectMinutes = lectMatch[2];
 		if((lectHours >= 0) && (lectHours < 24) && (lectMinutes >= 0) && (lectMinutes < 60)) {
-			var lectClockI = new Date(lectClock);
+			var lectClockI = new Date(lectureClock);
 			lectClockI.setHours(lectHours);
 			lectClockI.setMinutes(lectMinutes);
 			if(lectClockI > previousClock) {
@@ -56,7 +55,7 @@ function init() {
 		alertMsg = alertMsg + "\n" + lectI + ": " + lectureTimes[lectI];
 	}
 	alert(alertMsg); */
-	while((lectureCurrentActivity < lectureTimes.length) && (lectureTimes[lectureCurrentActivity] < lectClock)) {
+	while((lectureCurrentActivity < lectureTimes.length) && (lectureTimes[lectureCurrentActivity] < lectureClock)) {
 		++lectureCurrentActivity;
 	}
 	--lectureCurrentActivity;
@@ -88,9 +87,9 @@ function lectureFullScreen() {
 }
 
 function renderLectureTime() {
-	var lectClock = new Date();
-	document.getElementById("currentTimeCell").innerHTML = lectClock.toLocaleTimeString();
-	if(lectClock.getSeconds() == 0) {
+	lectureClock = new Date();
+	document.getElementById("currentTimeCell").innerHTML = lectureClock.toLocaleTimeString();
+	if(lectureClock.getSeconds() == 0) {
 		if(lectureTimeLeft) {
 			--lectureTimeLeft;
 		}
@@ -132,7 +131,6 @@ function renderLectureTimeLeft() {
 }
 
 function setLectureTimeLeft(lectureNextTime) {
-	var lectClock = new Date();
-	var lectDifference = new Date(lectureNextTime - lectClock);
+	var lectDifference = new Date(lectureNextTime - lectureClock);
 	lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
 }
