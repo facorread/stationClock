@@ -19,13 +19,42 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // The exam time can be set by clicking it.
-var lectureEndTime = "13:35", lectureTimeLeft = 75, lectureTimeEnabled = false, lectureActivity = 0;
+var lectureEndTime = "13:35", lectureTimeLeft = 75, lectureTimeEnabled = true, lectureCurrentActivity = 1, lectureActivityTimeArray = []; /* [] is the best practice, rather than new Array() */
 
 function init() {
-		setLectureTimeArr(["23", "59"]);
     renderTime();
+		var lectClock = new Date();
+		var previousClock = new Date(lectClock);
+		previousClock.setHours(0);
+		previousClock.setMinutes(0);
+		for(var lectActivity = document.getElementById("lectureActivity1");
+		    lectActivity;
+				lectActivity = document.getElementById("lectureActivity" + (++lectureCurrentActivity)))
+		{
+			var lectMatch = lectActivity.innerHTML.match(/^(\d\d?):(\d\d?) /);
+			var lectHours = lectMatch[1]; /* The first element is the whole match, unnecessary here. */
+			var lectMinutes = lectMatch[2];
+			if((lectHours >= 0) && (lectHours < 24) && (lectMinutes >= 0) && (lectMinutes < 60)) {
+				var lectClockI = new Date(lectClock);
+				lectClockI.setHours(lectHours);
+				lectClockI.setMinutes(lectMinutes);
+				if(lectClockI > previousClock) {
+					lectureActivityTimeArray.push(lectClockI);
+					previousClock = lectClockI;
+				} else {
+					alert("Please make sure activity times are strictly ordered and not taking place at midnight. Who teaches at midnight?\nPrevious activity: " + previousClock + "\nNew activity: " + lectClockI)
+					break;
+				}
+			} else
+				alert("Incorrect time: " + lectActivity.innerHTML);
+		}
+/*		var lectI, alertMsg = "lectureActivityTimeArray:";
+		for(lectI = 0; lectI < lectureActivityTimeArray.length; ++lectI) {
+			alertMsg = alertMsg + "\n" + lectI + ": " + lectureActivityTimeArray[lectI];
+		}
+		alert(alertMsg); */
+		setLectureTimeArr([lectHours, lectMinutes]);
     renderLectureTimeLeft();
-    resizeLecture();
     setInterval(renderTime, 1000);
 }
 
@@ -45,6 +74,7 @@ function lectureFullScreen() {
 
 function renderTime() {
     var lectCurrentTime = new Date();
+		
     document.getElementById("currentTimeCell").innerHTML = lectCurrentTime.toLocaleTimeString();
     if(lectureTimeEnabled && (lectCurrentTime.getSeconds() == 0)) {
         --lectureTimeLeft;
@@ -78,10 +108,11 @@ function setLectureTimeArr(timeArray) { /* Example for 1:35PM: setLectureTimeArr
 			var lectEnd = new Date();
 			lectEnd.setHours(lectEndHour);
 			lectEnd.setMinutes(lectEndMinute);
-			var lectDifferenceBuffer = lectEnd - lectNow;
-			var lectDifference = new Date(lectDifferenceBuffer);
-			lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
-			lectureTimeEnabled = (lectureTimeLeft > 0);
+			lectureTimeEnabled = (lectEnd > lectNow);
+			if(lectureTimeEnabled) {
+				var lectDifference = new Date(lectEnd - lectNow);
+				lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
+			}
 		}
 }
 
@@ -89,14 +120,11 @@ function setLectureTime() {
     var enteredText = prompt("Enter the ending time in 24-hour HH:MM format\n(0 to hide):", lectureEndTime);
 		var enteredMatch = enteredText.match(/^(\d\d?):(\d\d?)$/);
     if(enteredMatch) {
+			enteredMatch.shift(); /* The first element is the whole match, unnecessary here. */
 			setLectureTimeArr(enteredMatch);
     } else {
         lectureTimeEnabled = false;
     }
     renderTime();
     renderLectureTimeLeft();
-}
-
-function resizeLecture() {
-    document.getElementById("LectureMessages").style.height = (window.innerHeight * 0.8) + "px";
 }
