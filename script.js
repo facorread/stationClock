@@ -19,9 +19,10 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // The exam time can be set by clicking it.
-var lectureClock, lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
+var lectureNoSleep, lectureClock, lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
 
 function init() {
+	lectureNoSleep = new NoSleep();
 	lectureClock = new Date();
 	lectureActivities = document.getElementsByClassName("lectureActivity"); /* Keep as few global vars as possible */
 	if(lectureActivities.length == 0) {
@@ -85,6 +86,7 @@ window.onload = init;
 
 function lectureFullScreen() {
 	/* Request to see this app in fullscreen. */
+	lectureNoSleep.enable();
 	var lectureDoc = document.documentElement;
 	if (lectureDoc.requestFullscreen) {
 		lectureDoc.requestFullscreen();
@@ -98,6 +100,12 @@ function lectureFullScreen() {
 		lectureDoc.msRequestFullscreen();
 	}
 }
+
+function lectureWindowedMode() {
+	lectureNoSleep.disable();
+}
+
+window.onunload = lectureWindowedMode;
 
 function renderLectureTime() {
 	lectureClock = new Date();
