@@ -26,25 +26,14 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
     background-color:black;
     border:none;
     outline:none;
-    text-align:center;
-}
-
-.timeTable {
-    font-size:40px;
-    width:100%;
-    height:auto;
-    padding:0 1px 0 1px;
-}
-
-.currentTimeCell {
     text-align:left;
 }
 
-.lectureTimeCell {
-    text-align:right;
+.currentTimeCell, .lectureTimeCell {
+    font-size:80px;
 }
 
 .lectureActivity {
     font-size:30px;
-		margin-bottom: 1em;
+		margin-bottom: 0.5em;
 }
