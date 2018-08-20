@@ -105,7 +105,7 @@ function renderLectureTimeLeft() {
 		if(lectureCurrentActivity >= 0) {
 			lectureActivities[lectureCurrentActivity].style.color = "white";
 		}
-		lectureActivities[++lectureCurrentActivity].style.color = "green";
+		lectureActivities[++lectureCurrentActivity].style.color = "light green";
 		lectTimeCell.style.color = "white";
 	}
 	else if(lectureTimeLeft <= 2) {
