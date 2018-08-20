@@ -66,7 +66,7 @@ function init() {
 	}
 	renderLectureTime();
 	renderLectureTimeLeft();
-	setInterval(renderTime, 1000);
+	setInterval(renderLectureTime, 1000);
 }
 
 window.onload = init;
