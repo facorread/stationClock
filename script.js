@@ -22,8 +22,8 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 var lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
 
 function init() {
-	lectureActivities = document.getElementsByClassName("lectureActivity");
-	var lectClock = new Date(); /* Keep as few global vars as possible */
+	lectureActivities = document.getElementsByClassName("lectureActivity"); /* Keep as few global vars as possible */
+	var lectClock = new Date();
 	var previousClock = new Date(lectClock);
 	previousClock.setHours(0);
 	previousClock.setMinutes(0);
@@ -61,7 +61,7 @@ function init() {
 	}
 	--lectureCurrentActivity;
 	if(lectureCurrentActivity <= 0) {
-		lectureActivities[0].style.color = "yellow";
+		lectureActivities[0].style.color = "cyan";
 		setLectureTimeLeft(lectureTimes[0]);
 	}
 	renderLectureTime();
@@ -100,25 +100,35 @@ function renderLectureTime() {
 
 function renderLectureTimeLeft() {
 	var lectTimeCell = document.getElementById("lectureTimeCell")
-	if(lectureTimeLeft <= 0) {
-		if(lectureCurrentActivity >= 0) {
-			lectureActivities[lectureCurrentActivity].style.color = "white";
+	if(lectureCurrentActivity < lectureActivities.length) {
+		if(lectureTimeLeft <= 0) {
+			if(lectureCurrentActivity >= 0) {
+				lectureActivities[lectureCurrentActivity].style.color = "white";
+			}
+			++lectureCurrentActivity;
+			if(lectureActivities >= lectureActivities.length) {
+				lectureTimeCell.innerHTML = "Finished";
+				lectureTimeCell.style.color = "light green";
+			}
+			else {
+				lectureActivities[lectureCurrentActivity].style.color = "light green";
+				setLectureTimeLeft(lectureTimes[lectureCurrentActivity]);
+				lectureTimeCell.style.color = "white";
+			}
 		}
-		lectureActivities[++lectureCurrentActivity].style.color = "light green";
-		lectTimeCell.style.color = "white";
-	}
-	else if(lectureTimeLeft <= 2) {
-		if(lectureCurrentActivity >= 0) {
-			lectureActivities[lectureCurrentActivity].style.color = "red";
-		} else {
-			lectureActivities[0].style.color = "red";
+		else if(lectureTimeLeft <= 2) {
+			if(lectureCurrentActivity >= 0) {
+				lectureActivities[lectureCurrentActivity].style.color = "red";
+			} else {
+				lectureActivities[0].style.color = "red";
+			}
+			lectTimeCell.style.color = "red";
 		}
-		lectTimeCell.style.color = "red";
+		if(lectureTimeLeft > 0) { /* Yes, the code checks again. See above. */
+			lectTimeCell.style.color = document.body.style.color;
+		}
+		lectTimeCell.innerHTML = lectureTimeLeft + " Min";
 	}
-	if(lectureTimeLeft > 0) { /* Yes, the code checks again. See above. */
-		lectTimeCell.style.color = document.body.style.color;
-	}
-	lectTimeCell.innerHTML = lectureTimeLeft + " Min";
 }
 
 function setLectureTimeLeft(lectureNextTime) {
