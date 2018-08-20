@@ -100,7 +100,6 @@ function renderLectureTime() {
 
 function renderLectureTimeLeft() {
 	var lectTimeCell = document.getElementById("lectureTimeCell")
-	lectTimeCell.innerHTML = lectureTimeLeft + " Min";
 	if(lectureTimeLeft <= 0) {
 		if(lectureCurrentActivity >= 0) {
 			lectureActivities[lectureCurrentActivity].style.color = "white";
@@ -119,6 +118,7 @@ function renderLectureTimeLeft() {
 	if(lectureTimeLeft > 0) { /* Yes, the code checks again. See above. */
 		lectTimeCell.style.color = document.body.style.color;
 	}
+	lectTimeCell.innerHTML = lectureTimeLeft + " Min";
 }
 
 function setLectureTimeLeft(lectureNextTime) {
