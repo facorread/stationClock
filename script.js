@@ -19,9 +19,10 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // The exam time can be set by clicking it.
-var lectureClock = new Date(), lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
+var lectureClock, lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
 
 function init() {
+	lectureClock = new Date();
 	lectureActivities = document.getElementsByClassName("lectureActivity"); /* Keep as few global vars as possible */
 	if(lectureActivities.length == 0) {
 		alert("No activities, no lecture.");
