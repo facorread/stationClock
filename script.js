@@ -19,9 +19,10 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // The exam time can be set by clicking it.
-var lectureTimeLeft = 75, lectureTimeEnabled = false;
+var lectureEndTime = "13:35", lectureTimeLeft = 75, lectureTimeEnabled = false, lectureActivity = 0;
 
 function init() {
+		setLectureTimeArr(["23", "59"]);
     renderTime();
     renderLectureTimeLeft();
     resizeLecture();
@@ -43,9 +44,9 @@ function lectureFullScreen() {
 }
 
 function renderTime() {
-    var d = new Date();
-    document.getElementById("currentTimeCell").innerHTML = d.toLocaleTimeString();
-    if(lectureTimeEnabled && (d.getSeconds() == 0)) {
+    var lectCurrentTime = new Date();
+    document.getElementById("currentTimeCell").innerHTML = lectCurrentTime.toLocaleTimeString();
+    if(lectureTimeEnabled && (lectCurrentTime.getSeconds() == 0)) {
         --lectureTimeLeft;
         renderLectureTimeLeft();
     }
@@ -69,11 +70,26 @@ function renderLectureTimeLeft() {
 
 window.onload = init;
 
+function setLectureTimeArr(timeArray) { /* Example for 1:35PM: setLectureTimeArr(["13", "35"]); */
+		var lectEndHour = timeArray[0];
+		var lectEndMinute = timeArray[1];
+		if((lectEndHour >= 0) && (lectEndHour < 24) && (lectEndMinute >= 0) && (lectEndMinute < 60)) {
+			var lectNow = new Date();
+			var lectEnd = new Date();
+			lectEnd.setHours(lectEndHour);
+			lectEnd.setMinutes(lectEndMinute);
+			var lectDifferenceBuffer = lectEnd - lectNow;
+			var lectDifference = new Date(lectDifferenceBuffer);
+			lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
+			lectureTimeEnabled = (lectureTimeLeft > 0);
+		}
+}
+
 function setLectureTime() {
-    var enteredText = prompt("Enter the new time left in minutes\n(0 to hide):", lectureTimeLeft);
-    if(enteredText.match(/^\d+$/)) {
-        lectureTimeEnabled = (enteredText > 0);
-        lectureTimeLeft = enteredText;
+    var enteredText = prompt("Enter the ending time in 24-hour HH:MM format\n(0 to hide):", lectureEndTime);
+		var enteredMatch = enteredText.match(/^(\d\d?):(\d\d?)$/);
+    if(enteredMatch) {
+			setLectureTimeArr(enteredMatch);
     } else {
         lectureTimeEnabled = false;
     }
