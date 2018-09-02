@@ -23,10 +23,14 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 
 # User Guide
 
-Open https://facorread.github.io/examLecture/ in your phone. Type the class agenda using the model provided in the same webpage. As time progresses, the app will gray out past activities.
+Edit the list of times and activities directly on index.html using your text editor.
+
+Publish the page in your own website. An option for quick deployment is to use GitHub Pages. My particular address is https://facorread.github.io/lectureClock/
+
+Open the published page in your phone or tablet. As time progresses, the app will highlight activities that are in progress using the green color, and when 2 minutes are left to finish an activity, the highlight color will be red.
 
 # Questions
 
 Q. How do I change the colors, fonts, or sizes? How can I move the clock?
 
-Use Chrome Developer Tools.
+Use Chrome Developer Tools or your favorite text editor to edit the html, css or javascript code.
