@@ -155,7 +155,7 @@ function renderLectureTimeLeft() {
 
 function setLectureTimeLeft() {
 	if(lectureCurrentActivity < lectureActivities.length - 1) {
-		var lectDifference = new Date(lectureTimes[lectureCurrentActivity + 1] - lectureClock);
+		var lectDifference = new Date(lectureTimes[lectureCurrentActivity + 1] - lectureClock); /* If you use a local version of lectureClock or any other version of Date() then the time left will be totally wrong. */
 		lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
 	}
 	else {
