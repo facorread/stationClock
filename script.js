@@ -23,6 +23,12 @@ var lectureNoSleep;
 
 function init() {
 	lectureNoSleep = new NoSleep();
+	if (typeof(Storage) !== "undefined") {
+    var lectStoredPlan = localStorage.getItem("com.fabio.lectureClock.storedPlan");
+		if(lectStoredPlan) {
+			document.getElementById("lecturePlan").innerHTML = lectStoredPlan;
+		}
+	} /* Else Sorry! No Web Storage support... */
 	renderLectureTime(true);
 	setInterval(renderLectureTime, 1000);
 }
@@ -124,5 +130,8 @@ function renderLectureTime(lectFirstTime = false) {
 				}
 			}
 		}
+		if((typeof(Storage) !== "undefined") && (lectClock.getSeconds() == 0)) {
+			localStorage.setItem("com.fabio.lectureClock.storedPlan", document.getElementById("lecturePlan").innerHTML);
+		} /* Else Sorry! No Web Storage support... */
 	}
 }

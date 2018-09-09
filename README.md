@@ -23,11 +23,11 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 
 # User Guide
 
-Edit the list of times and activities directly on index.html using your text editor.
+Visit https://facorread.github.io/lectureClock/ in your phone or tablet. A clock, countdown timer, and class plan will appear. Edit the class plan by tapping and typing directly. Each line represents a class activity; it consists of a starting time in 24-hour format, followed by a space and the short name of the activity. The app ignores lines written in a different format.
 
-Publish the page in your own website. An option for quick deployment is to use GitHub Pages. My particular address is https://facorread.github.io/lectureClock/
+As time progresses, the app will highlight activities that are in progress using the green color, and when 2 minutes are left to finish an activity, the highlight color will be red.
 
-Open the published page in your phone or tablet. As time progresses, the app will highlight activities that are in progress using the green color, and when 2 minutes are left to finish an activity, the highlight color will be red.
+The app keeps the class plan in local storage. Every exact minute the class plan is saved from the screen into local storage, and will be restored when the page is visited again. If you need to reset the app to its default class plan, clear the site storage using your browser settings. Check your browser help for more details.
 
 # Questions
 
