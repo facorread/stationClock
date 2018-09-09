@@ -1,8 +1,10 @@
 # Documentation: https://gitlab.com/pages/plain-html
 pages:
   stage: deploy
+  script:
+  - echo 'Nothing to do according to Fabio...'
   artifacts:
     paths:
-    - lectureClock
+    - docs
   only:
   - master
