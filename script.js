@@ -19,66 +19,11 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // The exam time can be set by clicking it.
-var lectureNoSleep, lectureClock, lectureTimeLeft = 0, lectureCurrentActivity = 0, lectureActivities, lectureTimes = []; /* [] is the best practice, rather than new Array() */
+var lectureNoSleep;
 
 function init() {
 	lectureNoSleep = new NoSleep();
-	lectureClock = new Date();
-	lectureActivities = document.getElementsByClassName("lectureActivity"); /* Keep as few global vars as possible */
-	if(lectureActivities.length == 0) {
-		alert("No activities, no lecture.");
-	}
-	var previousClock = new Date(lectureClock);
-	previousClock.setHours(0);
-	previousClock.setMinutes(0);
-	/* Do not use the for/in statement because it may work asynchronously. */
-	var lectI;
-	for(lectI = 0; lectI < lectureActivities.length; ++lectI) {
-		var lectActivity = lectureActivities[lectI];
-		var lectMatch = lectActivity.innerHTML.match(/^(\d\d?):(\d\d?) /);
-		var lectHours = lectMatch[1]; /* The first element is the whole match, unnecessary here. */
-		var lectMinutes = lectMatch[2];
-		if((lectHours >= 0) && (lectHours < 24) && (lectMinutes >= 0) && (lectMinutes < 60)) {
-			var lectClockI = new Date(lectureClock);
-			lectClockI.setHours(lectHours);
-			lectClockI.setMinutes(lectMinutes);
-			if(lectClockI > previousClock) {
-				lectureTimes.push(lectClockI);
-				previousClock = lectClockI;
-			}
-			else {
-				alert("Please make sure activity times are strictly ordered and not taking place at midnight. Who teaches at midnight?\nPrevious activity: " + lectureActivities[lectI - 1].innerHTML + "\nCurrent activity: " +  lectureActivities[lectI].innerHTML)
-				break;
-			}
-		}
-		else {
-			alert("Incorrect time: " + lectActivity.innerHTML);
-		}
-	}
-/*	var lectI, alertMsg = "lectureTimes:";
-	for(lectI = 0; lectI < lectureTimes.length; ++lectI) {
-		alertMsg = alertMsg + "\n" + lectI + ": " + lectureTimes[lectI];
-	}
-	alert(alertMsg); */
-	while((lectureCurrentActivity < lectureTimes.length) && (lectureTimes[lectureCurrentActivity] < lectureClock)) {
-		++lectureCurrentActivity;
-	}
-	--lectureCurrentActivity;
-	var lectTimeCell = document.getElementById("lectureTimeCell");
-	if(lectureCurrentActivity < 0) {
-		lectureActivities[0].style.color = "ForestGreen";
-		lectTimeCell.style.color = "LawnGreen";
-	}
-	else {
-		lectureActivities[lectureCurrentActivity].style.color = "Lime";
-	}
-	if(lectureCurrentActivity == lectureActivities.length - 1) {
-		lectTimeCell.innerHTML = "Finished";
-		lectTimeCell.style.color = "Lime";
-	}
-	setLectureTimeLeft();
-	renderLectureTime();
-	renderLectureTimeLeft();
+	renderLectureTime(true);
 	setInterval(renderLectureTime, 1000);
 }
 
@@ -87,17 +32,17 @@ window.onload = init;
 function lectureFullScreen() {
 	/* Request to see this app in fullscreen. */
 	lectureNoSleep.enable();
-	var lectureDoc = document.documentElement;
-	if (lectureDoc.requestFullscreen) {
-		lectureDoc.requestFullscreen();
+	var lectDoc = document.documentElement;
+	if (lectDoc.requestFullscreen) {
+		lectDoc.requestFullscreen();
 	}
-	else if (lectureDoc.mozRequestFullScreen) { /* Firefox */
-		lectureDoc.mozRequestFullScreen();
+	else if (lectDoc.mozRequestFullScreen) { /* Firefox */
+		lectDoc.mozRequestFullScreen();
 	}
-	else if (lectureDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-		lectureDoc.webkitRequestFullscreen();
-	} else if (lectureDoc.msRequestFullscreen) { /* IE/Edge */
-		lectureDoc.msRequestFullscreen();
+	else if (lectDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+		lectDoc.webkitRequestFullscreen();
+	} else if (lectDoc.msRequestFullscreen) { /* IE/Edge */
+		lectDoc.msRequestFullscreen();
 	}
 }
 
@@ -107,58 +52,77 @@ function lectureWindowedMode() {
 
 window.onunload = lectureWindowedMode;
 
-function renderLectureTime() {
-	lectureClock = new Date();
-	document.getElementById("currentTimeCell").innerHTML = lectureClock.toLocaleTimeString();
-	if(lectureClock.getSeconds() == 0) {
-		if(lectureTimeLeft && (lectureCurrentActivity < lectureActivities.length - 1)) {
-			--lectureTimeLeft;
-		}
-		renderLectureTimeLeft();
-	}
-}
-
-function renderLectureTimeLeft() {
-	var lectTimeCell = document.getElementById("lectureTimeCell")
-	if(lectureCurrentActivity < lectureActivities.length - 1) {
-		if(lectureTimeLeft <= 0) {
-			if(lectureCurrentActivity >= 0) {
-				lectureActivities[lectureCurrentActivity].style.color = document.body.style.color;
+function renderLectureTime(lectFirstTime = false) {
+	var lectClock = new Date();
+	document.getElementById("currentTimeCell").innerHTML = lectClock.toLocaleTimeString();
+	if(lectFirstTime || (lectClock.getSeconds() == 0)) {
+		var lectActivities = document.getElementsByClassName("lectureActivity"); /* Keep as few global vars as possible */
+		if(lectActivities.length > 0) {
+			/* Do not use the for/in statement because it may work asynchronously. */
+			var lectI; /* Used as index of lecture activities */
+			var lectHighlighted = false; /* Make sure only one activity was highlighted */
+			var lectTimeCell = document.getElementById("lectureTimeCell");
+			for(lectI = 0; lectI < lectActivities.length; ++lectI) {
+				var lectActivity = lectActivities[lectI];
+				if(lectHighlighted) {
+					lectActivity.style.color = document.body.style.color;
+				}
+				else {
+					var lectMatch = lectActivity.innerHTML.match(/^(\d\d?):(\d\d?) /);
+					if(lectMatch == null) {
+						continue; /* Ignore badly formatted line */
+					}
+					var lectHours = lectMatch[1]; /* Element 0 is the whole match, unnecessary here. */
+					var lectMinutes = lectMatch[2];
+					if((lectHours >= 0) && (lectHours < 24) && (lectMinutes >= 0) && (lectMinutes < 60)) {
+						var lectActClock = new Date(lectClock);
+						lectActClock.setHours(lectHours);
+						lectActClock.setMinutes(lectMinutes);
+						if(lectClock < lectActClock) {
+							lectHighlighted = true;
+							var lectDifference = new Date(lectActClock - lectClock); /* Anything different from lectClock will produce a wrong time left. */
+							var lectTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
+							lectTimeCell.innerHTML = lectTimeLeft + " Min";
+							if(lectI == 0) {
+								lectActivity.style.color = "ForestGreen";
+								if(lectTimeLeft > 2) {
+									lectTimeCell.style.color = "LawnGreen";
+								}
+								else {
+									lectTimeCell.style.color = "red";
+								}
+							}
+							else {
+								lectActivity.style.color = document.body.style.color;
+								if(lectTimeLeft > 2) {
+									lectActivities[lectI - 1].style.color = "Lime";
+									lectTimeCell.style.color = document.body.style.color;
+								}
+								else {
+									lectActivities[lectI - 1].style.color = "red";
+									lectTimeCell.style.color = "red";
+								}
+							}
+						}
+						else {
+							if(lectI == lectActivities.length - 1) {
+								lectHighlighted = true;
+								lectActivity.style.color = "Lime";
+								lectTimeCell.innerHTML = "Finished";
+								lectTimeCell.style.color = "Lime";
+							}
+							else {
+								lectActivity.style.color = document.body.style.color;
+								/* lectTimeCell.style.color = document.body.style.color; Do not use here. */
+							}
+						}
+					}
+					else {
+						lectActivity.style.color = document.body.style.color;
+						continue; /* Ignore badly formatted line */
+					}
+				}
 			}
-			++lectureCurrentActivity;
-			lectureActivities[lectureCurrentActivity].style.color = "Lime";
-			if(lectureCurrentActivity == lectureActivities.length - 1) {
-				lectTimeCell.innerHTML = "Finished";
-				lectTimeCell.style.color = "Lime";
-			}
-			else {
-				lectTimeCell.style.color = document.body.style.color;
-			}
-			setLectureTimeLeft();
 		}
-		else if(lectureTimeLeft <= 2) {
-			if(lectureCurrentActivity >= 0) {
-				lectureActivities[lectureCurrentActivity].style.color = "red";
-			} else {
-				lectureActivities[0].style.color = "red";
-			}
-			lectTimeCell.style.color = "red";
-		}
-		if((lectureCurrentActivity >= 0) && (lectureCurrentActivity < lectureActivities.length - 1) && (lectureTimeLeft > 2)) { /* Yes, the code checks again. See above. */
-			lectTimeCell.style.color = document.body.style.color;
-		}
-	}
-	if(lectureCurrentActivity < lectureActivities.length - 1) { /* Yes, the code checks again. See above. */
-		lectTimeCell.innerHTML = lectureTimeLeft + " Min";
-	}
-}
-
-function setLectureTimeLeft() {
-	if(lectureCurrentActivity < lectureActivities.length - 1) {
-		var lectDifference = new Date(lectureTimes[lectureCurrentActivity + 1] - lectureClock); /* If you use a local version of lectureClock or any other version of Date() then the time left will be totally wrong. */
-		lectureTimeLeft = ((lectDifference.getHours() - 19) * 60 + lectDifference.getMinutes()); /* The 19 hour offset is contained in the epoch (7:00PM) */
-	}
-	else {
-		lectureTimeLeft = 100;
 	}
 }
