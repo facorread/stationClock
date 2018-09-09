@@ -1,0 +1,8 @@
+# Documentation: https://gitlab.com/pages/plain-html
+pages:
+  stage: deploy
+  artifacts:
+    paths:
+    - lectureClock
+  only:
+  - master
