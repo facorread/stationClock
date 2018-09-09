@@ -4,7 +4,7 @@ pages:
   stage: deploy
   script:
   - mkdir public
-  - mv *.html *.js *.css *.svg public/
+  - mv *.html *.js *.css *.png *.svg *.webmanifest public/
   artifacts:
     paths:
     - public
