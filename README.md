@@ -23,7 +23,7 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 
 # User Guide
 
-Visit https://facorread.github.io/lectureClock/ or https://facorread.gitlab.io/lectureClock in your phone or tablet. A clock, countdown timer, and class plan will appear. Edit the class plan by tapping and typing directly. Each line represents a class activity; it consists of a starting time in 24-hour format, followed by a space and the short name of the activity. The app ignores lines written in a different format.
+Visit either https://facorread.github.io/lectureClock/ or https://facorread.gitlab.io/lectureClock in your phone or tablet. A clock, countdown timer, and class plan will appear. Edit the class plan by tapping and typing directly. Each line represents a class activity; it consists of a starting time in 24-hour format, followed by a space and the short name of the activity. The app ignores lines written in a different format.
 
 As time progresses, the app highlights current activities on green; when 2 minutes are left to finish the activity, the highlight color turns to red.
 
