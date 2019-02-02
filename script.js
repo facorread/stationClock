@@ -36,19 +36,37 @@ function init() {
 window.onload = init;
 
 function lectureFullScreen() {
-	/* Request to see this app in fullscreen. */
-	lectureNoSleep.enable();
-	var lectDoc = document.documentElement;
-	if (lectDoc.requestFullscreen) {
-		lectDoc.requestFullscreen();
-	}
-	else if (lectDoc.mozRequestFullScreen) { /* Firefox */
-		lectDoc.mozRequestFullScreen();
-	}
-	else if (lectDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-		lectDoc.webkitRequestFullscreen();
-	} else if (lectDoc.msRequestFullscreen) { /* IE/Edge */
-		lectDoc.msRequestFullscreen();
+	if (
+	document.fullscreenElement || /* Standard syntax */
+	document.webkitFullscreenElement || /* Chrome, Safari and Opera syntax */
+	document.mozFullScreenElement ||/* Firefox syntax */
+	document.msFullscreenElement /* IE/Edge syntax */
+	) {
+		lectureNoSleep.disable();
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if (document.mozCancelFullScreen) { /* Firefox */
+			document.mozCancelFullScreen();
+		} else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+			document.webkitExitFullscreen();
+		} else if (document.msExitFullscreen) { /* IE/Edge */
+			document.msExitFullscreen();
+		}
+	} else {
+		/* Request to see this app in fullscreen. */
+		lectureNoSleep.enable();
+		var lectDoc = document.documentElement;
+		if (lectDoc.requestFullscreen) {
+			lectDoc.requestFullscreen();
+		}
+		else if (lectDoc.mozRequestFullScreen) { /* Firefox */
+			lectDoc.mozRequestFullScreen();
+		}
+		else if (lectDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+			lectDoc.webkitRequestFullscreen();
+		} else if (lectDoc.msRequestFullscreen) { /* IE/Edge */
+			lectDoc.msRequestFullscreen();
+		}
 	}
 }
 
@@ -75,7 +93,7 @@ function renderLectureTime(lectFirstTime = false) {
 				}
 				else {
 					var lectMatch = lectActivity.innerHTML.match(/^(\d\d?):(\d\d?) /);
-					if(lectMatch == null) {
+					if(lectMatch === null) {
 						continue; /* Ignore badly formatted line */
 					}
 					var lectHours = lectMatch[1]; /* Element 0 is the whole match, unnecessary here. */
