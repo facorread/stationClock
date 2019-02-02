@@ -21,8 +21,65 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
 // The exam time can be set by clicking it.
 var lectureNoSleep;
 
+function lectureSetEventListeners() {
+	var lectCurrentTimecell = document.getElementById("currentTimeCell");
+	if (
+	document.fullscreenElement || /* Standard syntax */
+	document.webkitFullscreenElement || /* Chrome, Safari and Opera syntax */
+	document.mozFullScreenElement ||/* Firefox syntax */
+	document.msFullscreenElement /* IE/Edge syntax */
+	) {
+		lectCurrentTimecell.removeEventListener("click", lectureRequestFullScreen)
+		lectCurrentTimecell.addEventListener("click", lectureExitFullScreen)
+	} else {
+		lectCurrentTimecell.removeEventListener("click", lectureExitFullScreen)
+		lectCurrentTimecell.addEventListener("click", lectureRequestFullScreen)
+	}
+}
+
+function lectureRequestFullScreen() {
+	lectureNoSleep.enable();
+	var lectDoc = document.documentElement;
+	if (lectDoc.requestFullscreen) {
+		lectDoc.requestFullscreen();
+	}
+	else if (lectDoc.mozRequestFullScreen) { /* Firefox */
+		lectDoc.mozRequestFullScreen();
+	}
+	else if (lectDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+		lectDoc.webkitRequestFullscreen();
+	} else if (lectDoc.msRequestFullscreen) { /* IE/Edge */
+		lectDoc.msRequestFullscreen();
+	}
+}
+
+function lectureExitFullScreen() {
+	lectureNoSleep.disable();
+	if (document.exitFullscreen) {
+		document.exitFullscreen();
+	} else if (document.mozCancelFullScreen) { /* Firefox */
+		document.mozCancelFullScreen();
+	} else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+		document.webkitExitFullscreen();
+	} else if (document.msExitFullscreen) { /* IE/Edge */
+		document.msExitFullscreen();
+	}
+}
+
 function init() {
 	lectureNoSleep = new NoSleep();
+	lectureSetEventListeners();
+	document.addEventListener("fullscreenchange", lectureSetEventListeners);
+	if (
+	document.fullscreenElement || /* Standard syntax */
+	document.webkitFullscreenElement || /* Chrome, Safari and Opera syntax */
+	document.mozFullScreenElement ||/* Firefox syntax */
+	document.msFullscreenElement /* IE/Edge syntax */
+	) {
+		lectureNoSleep.enable();
+	} else {
+		lectureNoSleep.disable();
+	}
 	if (typeof(Storage) !== "undefined") {
     var lectStoredPlan = localStorage.getItem("com.fabio.lectureClock.storedPlan");
 		if(lectStoredPlan) {
@@ -35,46 +92,11 @@ function init() {
 
 window.onload = init;
 
-function lectureFullScreen() {
-	if (
-	document.fullscreenElement || /* Standard syntax */
-	document.webkitFullscreenElement || /* Chrome, Safari and Opera syntax */
-	document.mozFullScreenElement ||/* Firefox syntax */
-	document.msFullscreenElement /* IE/Edge syntax */
-	) {
-		lectureNoSleep.disable();
-		if (document.exitFullscreen) {
-			document.exitFullscreen();
-		} else if (document.mozCancelFullScreen) { /* Firefox */
-			document.mozCancelFullScreen();
-		} else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-			document.webkitExitFullscreen();
-		} else if (document.msExitFullscreen) { /* IE/Edge */
-			document.msExitFullscreen();
-		}
-	} else {
-		/* Request to see this app in fullscreen. */
-		lectureNoSleep.enable();
-		var lectDoc = document.documentElement;
-		if (lectDoc.requestFullscreen) {
-			lectDoc.requestFullscreen();
-		}
-		else if (lectDoc.mozRequestFullScreen) { /* Firefox */
-			lectDoc.mozRequestFullScreen();
-		}
-		else if (lectDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-			lectDoc.webkitRequestFullscreen();
-		} else if (lectDoc.msRequestFullscreen) { /* IE/Edge */
-			lectDoc.msRequestFullscreen();
-		}
-	}
-}
-
-function lectureWindowedMode() {
+function lectureWindowUnload() {
 	lectureNoSleep.disable();
 }
 
-window.onunload = lectureWindowedMode;
+window.onunload = lectureWindowUnload;
 
 function renderLectureTime(lectFirstTime = false) {
 	var lectClock = new Date();
