@@ -34,7 +34,6 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 	width:100%;
 	padding:0;
 	text-align:center;
-	line-height:0.8;
 }
 
 .currentTimeCell, .stationTimeCell, #audioSampleDiv, #audioSampleP {
@@ -43,6 +42,10 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 
 .stationActivity, #audioSampleDiv, #audioSampleP {
 	font-size:80px;
+}
+
+.stationActivity {
+	text-indent:1em;
 }
 
 #stationNotes {
