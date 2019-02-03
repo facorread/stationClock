@@ -79,12 +79,6 @@ function init() {
 	} else {
 		stationNoSleep.disable();
 	}
-	if (typeof(Storage) !== "undefined") {
-    var sttnStoredPlan = localStorage.getItem("com.fabio.stationClock.storedPlan");
-		if(sttnStoredPlan) {
-			document.getElementById("stationPlan").innerHTML = sttnStoredPlan;
-		}
-	} /* Else Sorry! No Web Storage support... */
 	renderStationTime(true);
 	setInterval(renderStationTime, 1000);
 }
@@ -169,8 +163,5 @@ function renderStationTime(sttnFirstTime = false) {
 				}
 			}
 		}
-		if((typeof(Storage) !== "undefined") && (sttnClock.getSeconds() == 0)) {
-			localStorage.setItem("com.fabio.stationClock.storedPlan", document.getElementById("stationPlan").innerHTML);
-		} /* Else Sorry! No Web Storage support... */
 	}
 }
