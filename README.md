@@ -23,14 +23,10 @@ along with stationClock. If not, see <http://www.gnu.org/licenses/>.
 
 # User Guide
 
-Visit either https://facorread.github.io/stationClock/ or https://facorread.gitlab.io/stationClock in your phone or tablet. A clock, countdown timer, and class plan will appear. Edit the class plan by tapping and typing directly. Each line represents a class activity; it consists of a starting time in 24-hour format, followed by a space and the short name of the activity. The app ignores lines written in a different format.
-
-As time progresses, the app highlights current activities on green; when 2 minutes are left to finish the activity, the highlight color turns to red.
-
-The app keeps the class plan in the browser's local storage. Every exact minute the class plan is saved from the screen into local storage, and it is restored when the page is visited again. If you want to start over with a sample class plan, use your browser settings to clear the site storage. Check your browser's help for more details.
+Before students start coming into the classroom, turn on the computer and projector. In the web browser, visit one of http://facorread.github.io/stationClock/ or https://facorread.gitlab.io/stationClock and type your messages, instructions, clarifications about the exam contents, specific questions, glossary, rules, etc.
 
 # Questions
 
-Q. How do I change the colors, fonts, or sizes? How can I move the clock?
+Q. How do I change the colors, fonts, sizes, or the timer? How can I move the clock?
 
-Use Chrome Developer Tools or your favorite text editor to edit the html, css or javascript code.
+A. Use Chrome Developer Tools or your favorite text editor to edit the html, css or javascript code.
