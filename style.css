@@ -32,22 +32,30 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 .timeTable {
 	font-size:150px;
 	width:100%;
-	padding:0;
+}
+
+#audioSampleDiv, #audioSampleP {
 	text-align:center;
 }
 
-.currentTimeCell, .stationTimeCell, #audioSampleDiv, #audioSampleP {
-	text-align:center;
+.currentTimeCell {
+	text-indent:25px;
+}
+
+.stationTimeCell {
+	padding-right:50px;
+	text-align:right;
 }
 
 .stationActivity, #audioSampleDiv, #audioSampleP {
 	font-size:80px;
 }
 
-.stationActivity {
-	text-indent:1em;
+.stationNotes {
+	line-height:0.9;
+	text-indent:25px;
 }
 
 #stationNotes {
-	padding:0 50px 0 50px;
+	padding:0 50px 0 25px;
 }
