@@ -43,7 +43,6 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 
 .stationActivity, #audioSampleDiv, #audioSampleP {
 	font-size:80px;
-	margin-top:0.5em;
 }
 
 #stationNotes {
