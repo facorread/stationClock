@@ -47,7 +47,7 @@ function renderStationTime(sttnFirstTime = false) {
 	var sttnTimeCell = document.getElementById("stationTimeCell");
 	/* Time reference: The stationTimeCell timer must reach zero at 11:30AM = 690 minutes = 41400 seconds since midnight.
 	   Time interval: The stationTimeCell timer lasts 7 minutes = 420 seconds */
-	var sttnSecondsFromReference = 60 * (sttnClock.getHours() * 60 + sttnClock.getMinutes()) + sttnClock.getSeconds() - 41300;
+	var sttnSecondsFromReference = 60 * (sttnClock.getHours() * 60 + sttnClock.getMinutes()) + sttnClock.getSeconds() - 41400;
 	var sttnSecondsLeft = 420 - (sttnSecondsFromReference % 420);
 	var sttnSecondsLeft60 = (sttnSecondsLeft % 60);
 	var sttnTimeCell = document.getElementById("stationTimeCell");
