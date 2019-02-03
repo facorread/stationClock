@@ -28,8 +28,14 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 				<!-- Don't bother with a favicon; it will simply not show on GitHub or GitLab -->
     </head>
     <body>
-        <p class="currentTimeCell" id="currentTimeCell"></p>
-        <p class="stationTimeCell" id="stationTimeCell">Contents are set by script.js</p>
+        <table class="timeTable">
+        <tr>
+        <td class="currentTimeCell" id="currentTimeCell"></td>
+        <td class="stationTimeCell" id="stationTimeCell">
+						Contents are set by script.js
+        </td>
+        </tr>
+        </table>
 				<!-- Activities must be sorted in time and label, starting with HH:MM. Make sure the last activity is the end of the station.  -->
 				<div id="stationPlan" contenteditable="true">
 				<p class="stationActivity">11:30 Genetics</p>

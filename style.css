@@ -29,9 +29,19 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
     text-align:left;
 }
 
-.currentTimeCell, .stationTimeCell {
-    text-align:center;
-    font-size:70px;
+.timeTable {
+	font-size:65px;
+	width:100%;
+	height:auto;
+	padding:0 1px 0 1px;
+}
+
+.currentTimeCell {
+	text-align:left;
+}
+
+.stationTimeCell {
+	text-align:right;
 }
 
 .stationActivity {
