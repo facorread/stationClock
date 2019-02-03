@@ -34,17 +34,18 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 	width:100%;
 	height:auto;
 	padding:0 1px 0 1px;
+	text-align:center;
 }
 
 .currentTimeCell {
-	text-align:left;
+	text-align:center;
 }
 
 .stationTimeCell {
-	text-align:right;
+	text-align:center;
 }
 
 .stationActivity {
     font-size:30px;
-		margin-top:0.5em;
+	margin-top:0.5em;
 }
