@@ -47,12 +47,12 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 	text-align:right;
 }
 
-.stationActivity, #audioSampleDiv, #audioSampleP {
+#stationNotes, #audioSampleDiv, #audioSampleP {
 	font-size:80px;
 }
 
-.stationNotes {
-	line-height:0.9;
+#stationNotes {
+	line-height:1.1;
 	text-indent:25px;
 }
 
