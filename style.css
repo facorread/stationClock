@@ -37,15 +37,11 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 	text-align:center;
 }
 
-.currentTimeCell {
+.currentTimeCell, .stationTimeCell, #audioSampleDiv, #audioSampleP {
 	text-align:center;
 }
 
-.stationTimeCell {
-	text-align:center;
-}
-
-.stationActivity {
+.stationActivity, #audioSampleDiv, #audioSampleP {
     font-size:30px;
 	margin-top:0.5em;
 }

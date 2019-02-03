@@ -20,11 +20,17 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 
 var stationNoSleep;
 
+function hideAudioSample() {
+	document.getElementById("audioSampleDiv").style.display = "none";
+	document.getElementById("stationAlarm").removeEventListener("playing", hideAudioSample);
+	stationNoSleep.enable();
+}
+
 function init() {
 	stationNoSleep = new NoSleep();
-	stationNoSleep.enable();
 	renderStationTime(true);
 	setInterval(renderStationTime, 1000);
+	document.getElementById("stationAlarm").addEventListener("playing", hideAudioSample);
 }
 
 window.onload = init;
@@ -41,8 +47,8 @@ function renderStationTime(sttnFirstTime = false) {
 	var sttnTimeCell = document.getElementById("stationTimeCell");
 	/* Time reference: The stationTimeCell timer must reach zero at 11:30AM = 690 minutes = 41400 seconds since midnight.
 	   Time interval: The stationTimeCell timer lasts 7 minutes = 420 seconds */
-	var sttnSecondsToday = 60 * (sttnClock.getHours() * 60 + sttnClock.getMinutes()) + sttnClock.getSeconds();
-	var sttnSecondsLeft = 420 - (sttnSecondsToday % 420);
+	var sttnSecondsFromReference = 60 * (sttnClock.getHours() * 60 + sttnClock.getMinutes()) + sttnClock.getSeconds() - 41300;
+	var sttnSecondsLeft = 420 - (sttnSecondsFromReference % 420);
 	var sttnSecondsLeft60 = (sttnSecondsLeft % 60);
 	var sttnTimeCell = document.getElementById("stationTimeCell");
 	sttnTimeCell.innerHTML = Math.floor(sttnSecondsLeft / 60) + ((sttnSecondsLeft60 > 9) ? ":" : ":0") + sttnSecondsLeft60;
@@ -51,5 +57,8 @@ function renderStationTime(sttnFirstTime = false) {
 		sttnTimeCell.style.color = document.body.style.color;
 	} else {
 		sttnTimeCell.style.color = "red";
+		if(sttnSecondsLeft === 5) {
+			document.getElementById("stationAlarm").play();
+		}
 	}
 }
