@@ -1,21 +1,21 @@
-/* This file is part of lectureClock: Simple clock and outline for classroom activities
-Copyright (C) 2016-2018 Fabio Correa fabio5@osu.edu
+/* This file is part of stationClock: Simple clock, countdown, and message board for going through stations in a lab
+Copyright (C) 2016-2018 Fabio Correa facorread@gmail.com
 
-https://github.com/facorread/lectureClock
-https://gitlab.com/facorread/lectureClock
+https://github.com/facorread/stationClock
+https://gitlab.com/facorread/stationClock
 
-lectureClock is free software: you can redistribute it and/or modify
+stationClock is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-lectureClock is distributed in the hope that it will be useful,
+stationClock is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
+along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 * {
@@ -34,7 +34,7 @@ along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
     font-size:70px;
 }
 
-.lectureActivity {
+.stationActivity {
     font-size:30px;
 		margin-top:0.5em;
 }

@@ -1,29 +1,29 @@
-# lectureClock
+# stationClock
 
-Simple clock and outline for classroom activities
+Simple clock, countdown, and message board for going through stations in a lab
 
-Copyright (C) 2016-2018 Fabio Correa fabio5@osu.edu
+Copyright (C) 2016-2018 Fabio Correa facorread@gmail.com
 
-https://github.com/facorread/lectureClock
+https://github.com/facorread/stationClock
 
-https://gitlab.com/facorread/lectureClock
+https://gitlab.com/facorread/stationClock
 
-lectureClock is free software: you can redistribute it and/or modify
+stationClock is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-lectureClock is distributed in the hope that it will be useful,
+stationClock is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with lectureClock.  If not, see <http://www.gnu.org/licenses/>.
+along with stationClock. If not, see <http://www.gnu.org/licenses/>.
 
 # User Guide
 
-Visit either https://facorread.github.io/lectureClock/ or https://facorread.gitlab.io/lectureClock in your phone or tablet. A clock, countdown timer, and class plan will appear. Edit the class plan by tapping and typing directly. Each line represents a class activity; it consists of a starting time in 24-hour format, followed by a space and the short name of the activity. The app ignores lines written in a different format.
+Visit either https://facorread.github.io/stationClock/ or https://facorread.gitlab.io/stationClock in your phone or tablet. A clock, countdown timer, and class plan will appear. Edit the class plan by tapping and typing directly. Each line represents a class activity; it consists of a starting time in 24-hour format, followed by a space and the short name of the activity. The app ignores lines written in a different format.
 
 As time progresses, the app highlights current activities on green; when 2 minutes are left to finish the activity, the highlight color turns to red.
 
