@@ -31,19 +31,23 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .timeTable {
-	font-size:100px;
+	font-size:150px;
 	width:100%;
 	height:auto;
-	padding:0 1px 0 1px;
+	padding:20px 1px 0 1px;
 	text-align:center;
-	line-height:0.8;
 }
 
 .currentTimeCell, .stationTimeCell, #audioSampleDiv, #audioSampleP {
 	text-align:center;
+	line-height:0.5;
 }
 
 .stationActivity, #audioSampleDiv, #audioSampleP {
-    font-size:70px;
+    font-size:100px;
 	margin-top:0.5em;
+}
+
+#stationNotes {
+	padding:0 10px 0 10px;
 }
