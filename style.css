@@ -29,7 +29,7 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
     text-align:left;
 }
 
-.currentTimeCell, .lectureTimeCell {
+.currentTimeCell, .stationTimeCell {
     text-align:center;
     font-size:70px;
 }
