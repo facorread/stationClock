@@ -57,7 +57,7 @@ function renderStationTime(sttnFirstTime = false) {
 		sttnTimeCell.style.color = document.body.style.color;
 	} else {
 		sttnTimeCell.style.color = "red";
-		if(sttnSecondsLeft === 5) {
+		if(sttnSecondsLeft === 4) {
 			document.getElementById("stationAlarm").play();
 		}
 	}
