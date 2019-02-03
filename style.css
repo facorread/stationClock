@@ -30,11 +30,11 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .timeTable {
-	font-size:150px;
 	width:100%;
 }
 
 .timeTable * {
+	font-size:150px;
 	line-height:0.9;
 }
 
@@ -52,14 +52,11 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 #stationNotes, #audioSampleDiv, #audioSampleP {
-	font-size:80px;
+	font-size:90px;
 }
 
 #stationNotes {
 	line-height:1;
 	text-indent:25px;
-}
-
-#stationNotes {
 	padding:0 50px 0 25px;
 }
