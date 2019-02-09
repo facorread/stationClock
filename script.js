@@ -20,17 +20,32 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 
 var stationNoSleep;
 
-function hideAudioSample() {
-	document.getElementById("audioSampleDiv").style.display = "none";
-	document.getElementById("stationAlarm").removeEventListener("playing", hideAudioSample);
+function stationFullscreen() {
+	document.getElementById("initTable").style.display = "none";
 	stationNoSleep.enable();
+	var sttnDoc = document.documentElement;
+	if (sttnDoc.requestFullscreen) {
+		sttnDoc.requestFullscreen();
+	}
+	else if (sttnDoc.mozRequestFullScreen) { /* Firefox */
+		sttnDoc.mozRequestFullScreen();
+	}
+	else if (sttnDoc.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+		sttnDoc.webkitRequestFullscreen();
+	} else if (sttnDoc.msRequestFullscreen) { /* IE/Edge */
+		sttnDoc.msRequestFullscreen();
+	}
+}
+
+function stationAudioSample() {
+	stationFullscreen();
+	document.getElementById("stationAlarm").play();
 }
 
 function init() {
 	stationNoSleep = new NoSleep();
 	renderStationTime(true);
 	setInterval(renderStationTime, 1000);
-	document.getElementById("stationAlarm").addEventListener("playing", hideAudioSample);
 }
 
 window.onload = init;

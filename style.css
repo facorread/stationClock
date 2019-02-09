@@ -29,13 +29,21 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 	text-align:left;
 }
 
-#timeTable {
+#timeTable, #initTable {
 	width:100%;
+}
+
+#timeTable td, #initTable td {
+	width:50%;
 }
 
 #timeTable * {
 	font-size:150px;
 	line-height:0.9;
+}
+
+#initTable * {
+	color:red;
 }
 
 #currentTimeCell {
@@ -47,11 +55,11 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 	text-align:right;
 }
 
-#audioSampleDiv, #audioSampleP {
+#initTable td {
 	text-align:center;
 }
 
-#stationNotes, #audioSampleDiv, #audioSampleP {
+#stationNotes, #initTable td {
 	font-size:83px;
 }
 

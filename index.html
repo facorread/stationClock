@@ -34,13 +34,15 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 				<td id="stationTimeCell">Check script.js</td>
 			</tr>
 		</table>
-		<div id="audioSampleDiv">
-			<p id="audioSampleP">Listen to the alarm: <audio controls="true" id="stationAlarm">
+		<table id="initTable">
+			<tr>
+				<td onclick="stationFullscreen()">Fullscreen</td>
+				<td onclick="stationAudioSample()">Audio sample<audio id="stationAlarm">
 				<source src="alarm.mp3" type="audio/mpeg">
 				Your browser does not support the audio element.
-			</audio>
-			</p>
-		</div>
+			</audio></td>
+			</tr>
+		</table>
 		<div id="stationNotes" contenteditable="true">
 			<p>5 students per group. No need to make exactly the same groups as last week.</p>
 			<p>Please keep the aisles clear. You can keep backpacks and other elements next to the screen.</p>
