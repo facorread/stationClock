@@ -29,11 +29,11 @@ along with stationClock.  If not, see <http://www.gnu.org/licenses/>.
 	text-align:left;
 }
 
-.timeTable {
+#timeTable {
 	width:100%;
 }
 
-.timeTable * {
+#timeTable * {
 	font-size:150px;
 	line-height:0.9;
 }
